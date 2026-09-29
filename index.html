@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Adventure Game</title>
+
+<style>
+body {
+margin: 0;
+background: #87ceeb;
+font-family: Arial, sans-serif;
+text-align: center;
+}
+
+h1 {
+color: white;
+text-shadow: 2px 2px 4px #555;
+}
+
+#game {
+width: 90%;
+max-width: 800px;
+height: 450px;
+margin: 20px auto;
+position: relative;
+overflow: hidden;
+background: linear-gradient(#87ceeb 0%, #bdefff 70%, #62b84a 70%);
+border: 5px solid #333;
+border-radius: 15px;
+}
+
+#player {
+width: 40px;
+height: 50px;
+background: #e74c3c;
+position: absolute;
+left: 80px;
+bottom: 80px;
+border-radius: 10px;
+}
+
+.ground {
+position: absolute;
+bottom: 0;
+width: 100%;
+height: 80px;
+background: #795548;
+}
+
+.platform {
+position: absolute;
+width: 120px;
+height: 20px;
+background: #8e5a32;
+border: 3px solid #603d22;
+}
+
+#platform1 {
+left: 250px;
+bottom: 150px;
+}
+
+#platform2 {
+left: 480px;
+bottom: 230px;
+}
+
+.coin {
+position: absolute;
+width: 25px;
+height: 25px;
+background: gold;
+border-radius: 50%;
+border: 3px solid #d49b00;
+}
+
+#coin1 {
+left: 290px;
+bottom: 190px;
+}
+
+#coin2 {
+left: 520px;
+bottom: 270px;
+}
+
+#enemy {
+width: 40px;
+height: 40px;
+background: purple;
+position: absolute;
+bottom: 80px;
+left: 400px;
+border-radius: 50%;
+}
+
+#info {
+color: white;
+font-size: 20px;
+font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎮 MY ADVENTURE GAME</h1>
+
+<div id="info">
+⭐ คะแนน: <span id="score">0</span>
+
+🪙 เหรียญ: <span id="coins">0</span>
+</div>
+
+<div id="game">
+
+<div id="player"></div>
+
+<div class="platform" id="platform1"></div>
+
+<div class="platform" id="platform2"></div>
+
+<div class="coin" id="coin1"></div>
+
+<div class="coin" id="coin2"></div>
+
+<div id="enemy"></div>
+
+<div class="ground"></div>
+
+</div>
+
+<p>
+⬅️ ➡️ เดิน    Space = กระโดด
+</p>
+
+<script>
+
+const player = document.getElementById("player");
+const scoreText = document.getElementById("score");
+const coinsText = document.getElementById("coins");
+
+let x = 80;
+let y = 80;
+
+let velocityY = 0;
+
+let jumping = false;
+
+let score = 0;
+let coins = 0;
+
+const gravity = 0.6;
+
+document.addEventListener("keydown", function(event) {
+
+if (event.key === "ArrowRight") {
+x += 10;
+}
+
+if (event.key === "ArrowLeft") {
+x -= 10;
+}
+
+if (event.code === "Space" && !jumping) {
+velocityY = 12;
+jumping = true;
+}
+
+});
+
+function gameLoop() {
+
+velocityY -= gravity;
+
+y += velocityY;
+
+if (y <= 80) {
+y = 80;
+velocityY = 0;
+jumping = false;
+}
+
+if (x < 0) {
+x = 0;
+}
+
+if (x > 750) {
+x = 750;
+}
+
+player.style.left = x + "px";
+player.style.bottom = y + "px";
+
+requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+
+</script>
+
+</body>
+</html>
